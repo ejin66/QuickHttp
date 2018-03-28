@@ -4,13 +4,13 @@
 ### 1. Example
 
 ```java
-com.ejin.quickhttp.QuickClient client = new com.ejin.quickhttp.QuickClient.Builder().Build();
+QuickClient client = new QuickClient.Builder().Build();
 ```
 
 ​	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起请求
 
 ```java
-client.get("http://www.baidu.com", new com.ejin.quickhttp.StringCallback() {
+client.get("http://www.baidu.com", new StringCallback() {
             @Override
             void onSuccess(String s) {
 
@@ -26,7 +26,7 @@ client.get("http://www.baidu.com", new com.ejin.quickhttp.StringCallback() {
 ​	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自动映射到对象
 
 ```java
-client.post("url", new com.ejin.quickhttp.ModelCallback<Demo>() {
+client.post("url", new ModelCallback<Demo>() {
             @Override
             void onSuccess(Demo demo) {
                 
@@ -58,24 +58,24 @@ client.post("url", new com.ejin.quickhttp.ModelCallback<Demo>() {
 ​	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将字段data映射到不同对象，调用如下：
 
 ```java
-//在response模板中，增加注解@com.ejin.quickhttp.Code,@com.ejin.quickhttp.Error,@com.ejin.quickhttp.Data
+//在response模板中，增加注解@Code,@Error,@Data
 public class BaseResponse {
-    @com.ejin.quickhttp.Code
+    @Code
     public int errCode;
-    @com.ejin.quickhttp.Error
+    @Error
     public String errMsg;
-    @com.ejin.quickhttp.Data
+    @Data
     public String data;
 }
 
 //将模板设置到client
-com.ejin.quickhttp.QuickClient client = new com.ejin.quickhttp.QuickClient.Builder()
+QuickClient client = new QuickClient.Builder()
                 .setTemplate(BaseResponse.class)
                 .enableLog(true)
                 .Build();
                 
 //在回调泛型中指定data需要映射的对象类型
-client.post("url", new com.ejin.quickhttp.ModelCallback<DataBean>() {
+client.post("url", new ModelCallback<DataBean>() {
             @Override
             void onSuccess(DataBean dataBean) {
 
@@ -97,7 +97,7 @@ client.post("url", new com.ejin.quickhttp.ModelCallback<DataBean>() {
 ```java
 Object tag = new Object();
 
-client.get(tag, "http://www.baidu.com", new com.ejin.quickhttp.StringCallback() {
+client.get(tag, "http://www.baidu.com", new StringCallback() {
             @Override
             void onSuccess(String s) {
 
