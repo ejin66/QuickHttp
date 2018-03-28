@@ -108,7 +108,7 @@ public class Sync {
     private void responseLog(Request request, byte[] bytes) {
         if (enableLog) {
             String s = new String(bytes, Charset.forName("UTF-8"));
-            Log.d("Response [" + request.url() + "]\ncom.ejin.quickhttp.Data: " + s);
+            Log.d("Response [" + request.url() + "]\nData: " + s);
         }
     }
 
