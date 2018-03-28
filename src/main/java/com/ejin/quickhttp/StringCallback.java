@@ -7,12 +7,12 @@ import java.nio.charset.Charset;
  */
 public abstract class StringCallback extends DataCallback {
 
-    abstract void onSuccess(String s);
+    public abstract void onSuccess(String s);
 
-    abstract void onError(int code, String error);
+    public abstract void onError(int code, String error);
 
     @Override
-    void onSuccess(byte[] bytes) {
+    final public void onSuccess(byte[] bytes) {
         String s = new String(bytes, Charset.forName("UTF-8"));
         onSuccess(s);
     }

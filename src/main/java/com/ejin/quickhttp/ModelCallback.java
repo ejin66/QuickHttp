@@ -17,12 +17,12 @@ public abstract class ModelCallback<T> extends StringCallback {
         this.tClass = tClass;
     }
 
-    abstract void onSuccess(T t);
+    public abstract void onSuccess(T t);
 
-    abstract void onError(int code, String error);
+    public abstract void onError(int code, String error);
 
     @Override
-    void onSuccess(String s) {
+    final  public void onSuccess(String s) {
         if (tClass == null) {
             onError(-10000, "parse response error, T class is null");
             return;

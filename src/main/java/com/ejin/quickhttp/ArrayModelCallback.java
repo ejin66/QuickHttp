@@ -20,16 +20,12 @@ public abstract class ArrayModelCallback<T> extends StringCallback {
         this.tClass = tClass;
     }
 
-    abstract void onSuccess(List<T> list);
+    public abstract void onSuccess(List<T> list);
 
-    abstract void onError(int code, String error);
-
-    public String getDataString(String response) {
-        return response;
-    }
+    public abstract void onError(int code, String error);
 
     @Override
-    final void onSuccess(String s) {
+    final public void onSuccess(String s) {
         if (tClass == null) {
             onError(-10000, "parse response error, T class is null");
             return;

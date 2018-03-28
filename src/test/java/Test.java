@@ -10,7 +10,7 @@ public class Test {
                 .connectTimeout(5000)
                 .setTemplate(DemoBean.class)
                 .enableLog(true)
-                .Build();
+                .build();
     }
 
 }

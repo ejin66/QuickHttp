@@ -12,9 +12,9 @@ import java.nio.charset.Charset;
  */
 public abstract class DataCallback extends BaseCallback {
 
-    abstract void onSuccess(byte[] bytes);
+    public abstract void onSuccess(byte[] bytes);
 
-    abstract void onError(int code, String error);
+    public abstract void onError(int code, String error);
 
     final public void onFailure(Call call, IOException e) {
         super.onFailure(call, e);
