@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 import okhttp3.*;
 
 import java.nio.charset.Charset;
@@ -106,7 +108,7 @@ public class Sync {
     private void responseLog(Request request, byte[] bytes) {
         if (enableLog) {
             String s = new String(bytes, Charset.forName("UTF-8"));
-            Log.d("Response [" + request.url() + "]\nData: " + s);
+            Log.d("Response [" + request.url() + "]\ncom.ejin.quickhttp.Data: " + s);
         }
     }
 

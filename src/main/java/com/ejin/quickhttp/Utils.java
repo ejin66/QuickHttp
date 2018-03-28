@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 import com.alibaba.fastjson.JSON;
 
 import java.lang.annotation.Annotation;
@@ -48,7 +50,7 @@ class Utils {
                         if (item.getType() == int.class) {
                             result |= 1;
                         } else {
-                            Log.e("The field with Code annotation must be Type int");
+                            Log.e("The field with com.ejin.quickhttp.Code annotation must be Type int");
                         }
 
                     } else if (aType.equals(Error.class) && item.getType() == String.class) {
@@ -60,15 +62,15 @@ class Utils {
             }
 
             if ((result&1) != 1) {
-                Log.e("Template class missing Code annotation");
+                Log.e("Template class missing com.ejin.quickhttp.Code annotation");
             }
 
             if ((result&2) != 2) {
-                Log.e("Template class missing Error annotation");
+                Log.e("Template class missing com.ejin.quickhttp.Error annotation");
             }
 
             if ((result&4) != 4) {
-                Log.e("Template class missing Data annotation");
+                Log.e("Template class missing com.ejin.quickhttp.Data annotation");
             }
 
             return result == 7;

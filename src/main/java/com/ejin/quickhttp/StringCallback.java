@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 import java.nio.charset.Charset;
 
 /**

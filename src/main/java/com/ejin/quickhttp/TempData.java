@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 /**
  * Created by ejin on 2018/3/27.
  */

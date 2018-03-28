@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 import okhttp3.*;
@@ -17,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class QuickClient {
 
-    private static final String TAG = "QuickClient";
+    private static final String TAG = "com.ejin.quickhttp.QuickClient";
     private List<Header> headers = new ArrayList<Header>();
     private long connectTimeout = 5000;
     boolean enableLog = false;
@@ -192,7 +194,7 @@ public class QuickClient {
         }
     }
 
-    public void remove(Call call) {
+    void remove(Call call) {
         for (Map.Entry<Object, Call> item : callMap.entrySet()) {
             if (item.getValue() == call) {
                 callMap.remove(call);

@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 import okhttp3.internal.platform.Platform;
 
 /**

@@ -1,3 +1,7 @@
+import com.ejin.quickhttp.Code;
+import com.ejin.quickhttp.Data;
+import com.ejin.quickhttp.Error;
+
 /**
  * Created by ejin on 2018/3/27.
  */

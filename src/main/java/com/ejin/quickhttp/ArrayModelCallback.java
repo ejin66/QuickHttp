@@ -1,3 +1,5 @@
+package com.ejin.quickhttp;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
