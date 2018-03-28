@@ -112,3 +112,18 @@ client.get(tag, "http://www.baidu.com", new StringCallback() {
 client.cancel(tag);
 ```
 
+### 4. 同步请求
+
+```java
+client.sync().get(tag, "http://www.baidu.com", new StringCallback() {
+            @Override
+            void onSuccess(String s) {
+
+            }
+
+            @Override
+            void onError(int code, String error) {
+
+            }
+        });
+```
