@@ -261,7 +261,7 @@ public class QuickClient {
             return this;
         }
 
-        public QuickClient Build() {
+        public QuickClient build() {
             return client.make();
         }
 
