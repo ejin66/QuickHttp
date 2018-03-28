@@ -43,7 +43,7 @@ public abstract class DataCallback extends BaseCallback {
             byte[] bytes = body.bytes();
             if (enableLog()) {
                 String s = new String(bytes, Charset.forName("UTF-8"));
-                Log.d("Response [" + call.request().url() + "]\nData: " + s);
+                Log.d("Response [" + call.request().url() + "]\n" + s);
             }
             onSuccess(bytes);
         } catch (Exception e) {
