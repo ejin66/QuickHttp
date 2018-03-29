@@ -14,4 +14,12 @@ public class DemoBean {
     @Data
     public String data;
 
+    @Override
+    public String toString() {
+        return "DemoBean{" +
+                "errorCode=" + errorCode +
+                ", errorMsg='" + errorMsg + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

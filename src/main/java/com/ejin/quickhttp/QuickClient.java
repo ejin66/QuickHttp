@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class QuickClient {
 
-    private static final String TAG = "com.ejin.quickhttp.QuickClient";
+    private static volatile QuickClient defaultClient;
     private List<Header> headers = new ArrayList<Header>();
     private long connectTimeout = 5000;
     boolean enableLog = false;
@@ -51,6 +51,17 @@ public class QuickClient {
                 .build();
         sync = new Sync(client, enableLog);
         return this;
+    }
+
+    public static QuickClient getDefault() {
+        if (defaultClient == null) {
+            synchronized (QuickClient.class) {
+                if (defaultClient == null) {
+                    defaultClient = new QuickClient.Builder().build();
+                }
+            }
+        }
+        return defaultClient;
     }
 
     public Sync sync() {

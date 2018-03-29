@@ -7,21 +7,36 @@ import com.ejin.quickhttp.QuickClient;
 public class Test {
 
     public static void main(String[] args) {
-        QuickClient client = new QuickClient.Builder()
-                .enableLog(true)
-                .build();
+//        QuickClient client = new QuickClient.Builder()
+//                .enableLog(true)
+//                .build();
 
-        client.get("http://www.wanandroid.com/hotkey/json", new ModelCallback<Test>() {
+//        StringCallback callback = new StringCallback() {
+//            @Override
+//            public void onSuccess(String s) {
+//                System.out.println(s);
+//            }
+//
+//            @Override
+//            public void onError(int code, String error) {
+//                System.err.println(error);
+//            }
+//        };
+
+        ModelCallback callback = new ModelCallback<DemoBean>() {
+
             @Override
-            public void onSuccess(Test test) {
-
+            public void onSuccess(DemoBean demoBean) {
+                System.out.println(demoBean);
             }
 
             @Override
-            public void onError(int i, String s) {
-
+            public void onError(int code, String error) {
+                System.err.println(error);
             }
-        });
+        };
+
+        QuickClient.getDefault().get("http://www.wanandroid.com/hotkey/json", callback);
     }
 
 }
