@@ -3,14 +3,10 @@
 
 ### 1. Example
 
-```java
-QuickClient client = new QuickClient.Builder().Build();
-```
-
 ​	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发起请求
 
 ```java
-client.get("http://www.baidu.com", new StringCallback() {
+QuickClient.getDefault().get("http://www.baidu.com", new StringCallback() {
             @Override
             void onSuccess(String s) {
 
@@ -26,6 +22,8 @@ client.get("http://www.baidu.com", new StringCallback() {
 ​	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自动映射到对象
 
 ```java
+QuickClient client = new QuickClient.Builder().Build();
+
 client.post("url", new ModelCallback<Demo>() {
             @Override
             void onSuccess(Demo demo) {
