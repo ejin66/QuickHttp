@@ -1,7 +1,5 @@
 package com.ejin.quickhttp;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import okhttp3.*;
 
 import java.io.File;
@@ -68,15 +66,15 @@ public class QuickClient {
         return sync;
     }
 
-    public void get(@NotNull String url, @NotNull final BaseCallback callback) {
+    public void get(String url, final BaseCallback callback) {
         get(null, url, null, callback);
     }
 
-    public void get(@Nullable Object tag, @NotNull String url, @NotNull final BaseCallback callback) {
+    public void get(Object tag, String url, final BaseCallback callback) {
         get(tag, url, null, callback);
     }
 
-    public void get(@Nullable Object tag, @NotNull String url, @Nullable List<Header> headers, @NotNull final BaseCallback callback) {
+    public void get(Object tag, String url, List<Header> headers, final BaseCallback callback) {
         Request.Builder builder = new Request.Builder().url(url).get();
         if (headers != null) {
             for (Header item : headers) {
@@ -87,23 +85,23 @@ public class QuickClient {
         enqueue(request, tag, null, callback.set(this));
     }
 
-    public void post(@NotNull String url, @NotNull final BaseCallback callback) {
+    public void post(String url, final BaseCallback callback) {
         post(null, url, null, null, callback);
     }
 
-    public void post(@Nullable Object tag, @NotNull String url, @NotNull final BaseCallback callback) {
+    public void post(Object tag, String url, final BaseCallback callback) {
         post(tag, url, null, null, callback);
     }
 
-    public void post(@NotNull String url, @Nullable Object body, @NotNull final BaseCallback callback) {
+    public void post(String url, Object body, final BaseCallback callback) {
         post(null, url, null, body, callback);
     }
 
-    public void post(@Nullable Object tag, @NotNull String url, @Nullable Object body, @NotNull final BaseCallback callback) {
+    public void post(Object tag, String url, Object body, final BaseCallback callback) {
         post(tag, url, null, body, callback);
     }
 
-    public void post(@Nullable Object tag, @NotNull String url, @Nullable List<Header> headers, @Nullable Object body, @NotNull final BaseCallback callback) {
+    public void post(Object tag, String url, List<Header> headers, Object body, final BaseCallback callback) {
         String requestBody = Utils.convertObj2String(body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);
@@ -121,11 +119,11 @@ public class QuickClient {
         enqueue(request, tag, requestBody, callback.set(this));
     }
 
-    public void download(@NotNull String url, @NotNull final String path, @NotNull final ProgressCallback callback) {
+    public void download(String url, final String path, final ProgressCallback callback) {
         download(null, url, path, callback);
     }
 
-    public void download(@Nullable Object tag, @NotNull String url, @NotNull final String path, @NotNull final ProgressCallback callback) {
+    public void download(Object tag, String url, final String path, final ProgressCallback callback) {
         Request request = new Request.Builder().url(url).build();
         enqueue(request, tag, "Download To " + path, new Callback() {
             public void onFailure(Call call, IOException e) {
@@ -169,11 +167,11 @@ public class QuickClient {
         });
     }
 
-    public void upload(@NotNull String url, @NotNull final File file, @NotNull final ProgressCallback callback) {
+    public void upload(String url, final File file, final ProgressCallback callback) {
         upload(null, url, file, callback);
     }
 
-    public void upload(@Nullable Object tag, @NotNull String url, @NotNull final File file, @NotNull final ProgressCallback callback) {
+    public void upload(Object tag, String url, final File file, final ProgressCallback callback) {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
         final Request request = new Request.Builder()
                 .url(url)
@@ -196,7 +194,7 @@ public class QuickClient {
         });
     }
 
-    public void cancel(@NotNull Object tag) {
+    public void cancel(Object tag) {
         for (Map.Entry<Object, Call> item : callMap.entrySet()) {
             if (item.getKey() == tag) {
                 item.getValue().cancel();
@@ -215,7 +213,7 @@ public class QuickClient {
 
     private void enqueue(Request request, Object tag, String body, Callback callback) {
         if (enableLog) {
-            String log = "Request ["+ request.method() + "][" + request.url() +"]";
+            String log = "Request [" + request.method() + "][" + request.url() + "]";
             if (body != null) {
                 log += "\n" + body;
             }
