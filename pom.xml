@@ -4,10 +4,31 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ejin.library</groupId>
+    <groupId>com.github.ejin66</groupId>
     <artifactId>QuickHttp</artifactId>
-    <version>1.0.0</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
+
+    <name>QuickHttp</name>
+    <description>Quick Http 1.0.0 deploy</description>
+    <url>https://www.github.com/ejin66/QuickHttp</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>ejin</name>
+            <email>250022190@qq.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:ejin66/QuickHttp.git</connection>
+        <developerConnection>scm:git:git@github.com:ejin66/QuickHttp.git</developerConnection>
+        <url>git@github.com:ejin66/QuickHttp.git</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,14 +50,6 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Nexus Release Repository</name>
-            <url>http://suhc-appdep-01:8081/repository/inovance-android/</url>
-        </repository>
-    </distributionManagement>
-
     <dependencies>
 
         <dependency>
@@ -50,5 +63,65 @@
             <version>1.1.67.android</version>
         </dependency>
     </dependencies>
-
+    <profiles>
+    <profile>
+        <id>release</id>
+        <build>
+            <plugins>
+                <!-- Source -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Javadoc -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- GPG -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+        <distributionManagement>
+            <snapshotRepository>
+                <id>oss</id>
+                <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            </snapshotRepository>
+            <repository>
+                <id>oss</id>
+                <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            </repository>
+        </distributionManagement>
+    </profile>
+    </profiles>
 </project>
