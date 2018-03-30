@@ -116,3 +116,17 @@ client.cancel(tag);
 String response = client.sync().get("http://www.baidu.com");
 //do something
 ```
+
+# How To Use
+
+```java
+<dependency>
+    <groupId>com.github.ejin66</groupId>
+    <artifactId>QuickHttp</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+or
+```java
+compile 'com.github.ejin66:QuickHttp:1.0'
+```
