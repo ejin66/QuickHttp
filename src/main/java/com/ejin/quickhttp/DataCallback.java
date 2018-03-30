@@ -16,8 +16,7 @@ public abstract class DataCallback extends BaseCallback {
 
     public abstract void onError(int code, String error);
 
-    final public void onFailure(Call call, IOException e) {
-        super.onFailure(call, e);
+    final public void onFailure2(Call call, IOException e) {
         if (enableLog()) {
             Log.e("Response [" + call.request().url() + "] error:" + e.getMessage());
         }
@@ -25,8 +24,7 @@ public abstract class DataCallback extends BaseCallback {
     }
 
 
-    final public void onResponse(Call call, Response response) throws IOException {
-        super.onResponse(call, response);
+    final public void onResponse2(Call call, Response response) {
         ResponseBody body = response.body();
 
         if (body == null) {

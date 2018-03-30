@@ -55,7 +55,7 @@ public class QuickClient {
         if (defaultClient == null) {
             synchronized (QuickClient.class) {
                 if (defaultClient == null) {
-                    defaultClient = new QuickClient.Builder().build();
+                    defaultClient = new QuickClient.Builder().enableLog(true).build();
                 }
             }
         }

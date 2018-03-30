@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by ejin on 2018/3/27.
  */
-abstract class BaseCallback implements Callback {
+public abstract class BaseCallback implements Callback {
 
     private QuickClient client;
     private boolean enableLog = false;
@@ -37,14 +37,21 @@ abstract class BaseCallback implements Callback {
     }
 
     @Override
-    public void onFailure(Call call, IOException e) {
+    final public void onFailure(Call call, IOException e) {
         client.remove(call);
         client = null;
+        onFailure2(call, e);
     }
 
     @Override
-    public void onResponse(Call call, Response response) throws IOException {
+    final public void onResponse(Call call, Response response) {
         client.remove(call);
         client = null;
+        onResponse2(call, response);
     }
+
+    public abstract void onFailure2(Call call, IOException e);
+
+    public abstract void onResponse2(Call call, Response response);
+
 }
