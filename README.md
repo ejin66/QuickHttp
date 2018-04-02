@@ -130,3 +130,9 @@ or
 ```java
 compile 'com.github.ejin66:QuickHttp:1.0.1'
 ```
+注：
+```java
+//框架中用到的fastjson, 对kotlin data class/class处理存在问题
+//如果用到Kolin data class/class, 需加上dependence：
+implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+```
