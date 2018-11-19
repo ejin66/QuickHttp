@@ -75,14 +75,7 @@ public class QuickClient {
     }
 
     public void get(Object tag, String url, List<Header> headers, final BaseCallback callback) {
-        Request.Builder builder = new Request.Builder().url(url).get();
-        if (headers != null) {
-            for (Header item : headers) {
-                builder.addHeader(item.getKey(), item.getValue());
-            }
-        }
-        Request request = builder.build();
-        enqueue(request, tag, null, callback.set(this));
+        request(tag, url, "GET", headers, null, callback);
     }
 
     public void post(String url, final BaseCallback callback) {
@@ -102,13 +95,57 @@ public class QuickClient {
     }
 
     public void post(Object tag, String url, List<Header> headers, Object body, final BaseCallback callback) {
+        request(tag, url, "POST", headers, body, callback);
+    }
+
+    public void put(String url, final BaseCallback callback) {
+        put(null, url, null, null, callback);
+    }
+
+    public void put(Object tag, String url, final BaseCallback callback) {
+        put(tag, url, null, null, callback);
+    }
+
+    public void put(String url, Object body, final BaseCallback callback) {
+        put(null, url, null, body, callback);
+    }
+
+    public void put(Object tag, String url, Object body, final BaseCallback callback) {
+        put(tag, url, null, body, callback);
+    }
+
+    public void put(Object tag, String url, List<Header> headers, Object body, final BaseCallback callback) {
+        request(tag, url, "PUT", headers, body, callback);
+    }
+
+    public void delete(String url, final BaseCallback callback) {
+        delete(null, url, null, null, callback);
+    }
+
+    public void delete(Object tag, String url, final BaseCallback callback) {
+        delete(tag, url, null, null, callback);
+    }
+
+    public void delete(String url, Object body, final BaseCallback callback) {
+        delete(null, url, null, body, callback);
+    }
+
+    public void delete(Object tag, String url, Object body, final BaseCallback callback) {
+        delete(tag, url, null, body, callback);
+    }
+
+    public void delete(Object tag, String url, List<Header> headers, Object body, final BaseCallback callback) {
+        request(tag, url, "DELETE", headers, body, callback);
+    }
+
+    private void request(Object tag, String url, String method, List<Header> headers, Object body, final BaseCallback callback) {
         String requestBody = Utils.convertObj2String(body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);
         if (requestBody == null) {
-            builder.post(RequestBody.create(null, ""));
+            builder.method(method, RequestBody.create(null, ""));
         } else {
-            builder.post(RequestBody.create(jsonMediaType, requestBody));
+            builder.method(method, RequestBody.create(jsonMediaType, requestBody));
         }
         if (headers != null) {
             for (Header item : headers) {
