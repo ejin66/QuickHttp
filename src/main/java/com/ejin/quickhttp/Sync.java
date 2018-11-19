@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by ejin on 2018/3/27.
  */
-class Sync {
+public class Sync {
 
     private OkHttpClient client;
     private boolean enableLog;
@@ -28,8 +28,8 @@ class Sync {
         return post(url, null, body);
     }
 
-    public SyncResult put(String url) {
-        return put(url, null);
+    public SyncResult put(String url, Object body) {
+        return put(url, null, body);
     }
 
     public SyncResult delete(String url, Object body) {
@@ -44,22 +44,24 @@ class Sync {
         return request(url, "POST", headers, body);
     }
 
-    public SyncResult put(String url, List<Header> headers) {
-        return request(url, "GET", headers, null);
+    public SyncResult put(String url, List<Header> headers, Object body) {
+        return request(url, "PUT", headers, body);
     }
 
     public SyncResult delete(String url, List<Header> headers, Object body) {
-         return request(url, "POST", headers, body);
+         return request(url, "DELETE", headers, body);
     }
 
     private SyncResult request(String url, String method, List<Header> headers, Object body) {
         String requestBody = Utils.convertObj2String(body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);
-        if (requestBody == null) {
-            builder.method(method, RequestBody.create(null, ""));
-        } else {
-            builder.method(method, RequestBody.create(jsonMediaType, requestBody));
+        if (!"GET".equals(method)) {
+            if (requestBody == null) {
+                builder.method(method, RequestBody.create(null, ""));
+            } else {
+                builder.method(method, RequestBody.create(jsonMediaType, requestBody));
+            }
         }
         if (headers != null) {
             for (Header item : headers) {
@@ -111,11 +113,11 @@ class Sync {
         }
     }
 
-    private class SyncResult {
+    public class SyncResult {
 
         private byte[] data;
 
-        SyncResult(byte[] data) {
+        private SyncResult(byte[] data) {
             this.data = data;
         }
 

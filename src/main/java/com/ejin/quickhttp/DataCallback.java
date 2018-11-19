@@ -16,15 +16,16 @@ public abstract class DataCallback extends BaseCallback {
 
     public abstract void onError(int code, String error);
 
-    final public void onFailure2(Call call, IOException e) {
+    @Override
+    final public void onFailure(Call call, IOException e) {
         if (enableLog()) {
             Log.e("Response [" + call.request().url() + "] error:" + e.getMessage());
         }
         onError(-10000, e.getMessage());
     }
 
-
-    final public void onResponse2(Call call, Response response) {
+    @Override
+    final public void onResponse(Call call, Response response) {
         ResponseBody body = response.body();
 
         if (body == null) {

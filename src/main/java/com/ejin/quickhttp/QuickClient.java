@@ -142,11 +142,14 @@ public class QuickClient {
         String requestBody = Utils.convertObj2String(body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);
-        if (requestBody == null) {
-            builder.method(method, RequestBody.create(null, ""));
-        } else {
-            builder.method(method, RequestBody.create(jsonMediaType, requestBody));
+        if (!"GET".equals(method)) {
+            if (requestBody == null) {
+                builder.method(method, RequestBody.create(null, ""));
+            } else {
+                builder.method(method, RequestBody.create(jsonMediaType, requestBody));
+            }
         }
+
         if (headers != null) {
             for (Header item : headers) {
                 builder.addHeader(item.getKey(), item.getValue());
@@ -248,7 +251,7 @@ public class QuickClient {
         }
     }
 
-    private void enqueue(Request request, Object tag, String body, Callback callback) {
+    private void enqueue(Request request, Object tag, String body, final Callback callback) {
         if (enableLog) {
             String log = "Request [" + request.method() + "][" + request.url() + "]";
             if (body != null) {
@@ -257,7 +260,17 @@ public class QuickClient {
             Log.d(log);
         }
         Call call = client.newCall(request);
-        call.enqueue(callback);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(call, e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.onResponse(call, response);
+            }
+        });
         if (tag != null) {
             callMap.put(tag, call);
         }
