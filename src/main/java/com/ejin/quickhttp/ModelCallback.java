@@ -24,7 +24,7 @@ public abstract class ModelCallback<T> extends StringCallback {
     @Override
     final  public void onSuccess(String s) {
         if (tClass == null) {
-            onError(-10000, "parse response error, T class is null");
+            handlerError(-10000, "parse response error, T class is null");
             return;
         }
 
@@ -35,12 +35,12 @@ public abstract class ModelCallback<T> extends StringCallback {
                 TempData tempData = Utils.parseTemplateByAnnotation(o);
 
                 if (tempData == null) {
-                    onError(-10000, "parse template data with annotation failed");
+                    handlerError(-10000, "parse template data with annotation failed");
                     return;
                 }
 
                 if (tempData.getCode() != getSuccessCode()) {
-                    onError(tempData.getCode(), tempData.getError());
+                    handlerError(tempData.getCode(), tempData.getError());
                     return;
                 }
                 data = tempData.getData();
@@ -49,7 +49,13 @@ public abstract class ModelCallback<T> extends StringCallback {
             T t = JSONObject.parseObject(data, tClass);
             onSuccess(t);
         } catch (Exception e) {
-            onError(-10000, "parse response error: " + e.getMessage());
+            handlerError(-10000, "parse response error: " + e.getMessage());
         }
+    }
+
+    private void handlerError(int code, String error) {
+        if (enableLog())
+            Log.e(error);
+        onError(code, error);
     }
 }

@@ -36,10 +36,11 @@ public class Test {
             }
         };
 
+//        QuickClient.getDefault().get("https://www.baidu.com", callback);
         QuickClient.getDefault().get("http://www.wanandroid.com/hotkey/json", callback);
-        QuickClient.getDefault().post("http://www.wanandroid.com/hotkey/json", callback);
-        QuickClient.getDefault().put("http://www.wanandroid.com/hotkey/json", callback);
-        QuickClient.getDefault().delete("http://www.wanandroid.com/hotkey/json", callback);
+//        QuickClient.getDefault().post("http://www.wanandroid.com/hotkey/json", callback);
+//        QuickClient.getDefault().put("http://www.wanandroid.com/hotkey/json", callback);
+//        QuickClient.getDefault().delete("http://www.wanandroid.com/hotkey/json", callback);
 
 //        QuickClient.getDefault().sync().get("http://www.wanandroid.com/hotkey/json").string();
 //        QuickClient.getDefault().sync().post("http://www.wanandroid.com/hotkey/json", null).string();

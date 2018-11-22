@@ -95,9 +95,15 @@ class Utils {
                     if (aType.equals(Code.class)) {
                         data.setCode(item.getInt(o));
                     } else if (aType.equals(Error.class)) {
-                        data.setError(item.get(o).toString());
+                        Object value = item.get(o);
+                        if (value != null) {
+                            data.setError(value.toString());
+                        }
                     } else if (aType.equals(Data.class)) {
-                        data.setData(item.get(o).toString());
+                        Object value = item.get(o);
+                        if (value != null) {
+                            data.setData(value.toString());
+                        }
                     }
                 }
             }

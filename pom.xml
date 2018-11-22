@@ -6,11 +6,11 @@
 
     <groupId>com.github.ejin66</groupId>
     <artifactId>QuickHttp</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>QuickHttp</name>
-    <description>Quick Http 1.0.0 deploy</description>
+    <description>Quick Http New Version</description>
     <url>https://www.github.com/ejin66/QuickHttp</url>
     <licenses>
         <license>
