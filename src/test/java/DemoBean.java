@@ -1,6 +1,7 @@
 import com.ejin.quickhttp.Code;
 import com.ejin.quickhttp.Data;
 import com.ejin.quickhttp.Error;
+import com.google.gson.JsonElement;
 
 /**
  * Created by ejin on 2018/3/27.
@@ -12,7 +13,7 @@ public class DemoBean {
     @Error
     public String errorMsg;
     @Data
-    public String data;
+    public JsonElement data;
 
     @Override
     public String toString() {

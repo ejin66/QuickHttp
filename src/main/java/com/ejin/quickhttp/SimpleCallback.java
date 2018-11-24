@@ -5,10 +5,14 @@ package com.ejin.quickhttp;
  */
 public abstract class SimpleCallback extends ModelCallback<Object> {
 
+    public SimpleCallback() {
+        super(Object.class);
+    }
+
     public abstract void onSuccess();
 
     @Override
-    public void onSuccess(Object o) {
+    final public void onSuccess(Object o) {
         onSuccess();
     }
 }

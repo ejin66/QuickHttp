@@ -1,6 +1,6 @@
 package com.ejin.quickhttp;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -24,14 +24,14 @@ class Utils {
         return null;
     }
 
-    static String convertObj2String(Object o) {
+    static String convertObj2String(Gson gson, Object o) {
         if (o == null) {
             return null;
         }
         if (o instanceof String) {
             return (String) o;
         }
-        return JSON.toJSONString(o);
+        return gson.toJson(o);
     }
 
     static boolean checkTemplateClass(Class c) {
@@ -61,15 +61,15 @@ class Utils {
                 }
             }
 
-            if ((result&1) != 1) {
+            if ((result & 1) != 1) {
                 Log.e("Template class missing com.ejin.quickhttp.Code annotation");
             }
 
-            if ((result&2) != 2) {
+            if ((result & 2) != 2) {
                 Log.e("Template class missing com.ejin.quickhttp.Error annotation");
             }
 
-            if ((result&4) != 4) {
+            if ((result & 4) != 4) {
                 Log.e("Template class missing com.ejin.quickhttp.Data annotation");
             }
 
@@ -80,7 +80,7 @@ class Utils {
         return false;
     }
 
-    static TempData parseTemplateByAnnotation(Object o) {
+    static TempData parseTemplateByAnnotation(Gson gson, Object o) {
         Field[] fields = o.getClass().getDeclaredFields();
         try {
             TempData data = new TempData();
@@ -102,7 +102,7 @@ class Utils {
                     } else if (aType.equals(Data.class)) {
                         Object value = item.get(o);
                         if (value != null) {
-                            data.setData(value.toString());
+                            data.setData(gson.toJsonTree(value));
                         }
                     }
                 }

@@ -1,6 +1,6 @@
 package com.ejin.quickhttp;
 
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import okhttp3.*;
 
 import java.io.UnsupportedEncodingException;
@@ -14,9 +14,11 @@ public class Sync {
 
     private OkHttpClient client;
     private boolean enableLog;
+    private Gson gson;
 
-    Sync(OkHttpClient client, boolean enableLog) {
+    Sync(OkHttpClient client, Gson gson, boolean enableLog) {
         this.client = client;
+        this.gson = gson;
         this.enableLog = enableLog;
     }
 
@@ -49,11 +51,11 @@ public class Sync {
     }
 
     public SyncResult delete(String url, List<Header> headers, Object body) {
-         return request(url, "DELETE", headers, body);
+        return request(url, "DELETE", headers, body);
     }
 
     private SyncResult request(String url, String method, List<Header> headers, Object body) {
-        String requestBody = Utils.convertObj2String(body);
+        String requestBody = Utils.convertObj2String(gson, body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);
         if (!"GET".equals(method)) {
@@ -125,7 +127,7 @@ public class Sync {
             if (data == null) return null;
 
             try {
-                return JSONObject.parseObject(data, c);
+                return gson.fromJson(new String(data, "UTF-8"), c);
             } catch (Exception e) {
                 e.printStackTrace();
             }

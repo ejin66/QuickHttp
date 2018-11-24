@@ -1,5 +1,6 @@
 package com.ejin.quickhttp;
 
+import com.google.gson.Gson;
 import okhttp3.*;
 
 import java.io.File;
@@ -26,6 +27,7 @@ public class QuickClient {
     private OkHttpClient client;
     private Sync sync;
     private Map<Object, Call> callMap = new HashMap<Object, Call>();
+    Gson gson = new Gson();
 
     private QuickClient() {
     }
@@ -47,7 +49,7 @@ public class QuickClient {
                 .writeTimeout(connectTimeout, TimeUnit.MILLISECONDS)
                 .addInterceptor(headerInterceptor)
                 .build();
-        sync = new Sync(client, enableLog);
+        sync = new Sync(client, gson, enableLog);
         return this;
     }
 
@@ -139,7 +141,7 @@ public class QuickClient {
     }
 
     private void request(Object tag, String url, String method, List<Header> headers, Object body, final BaseCallback callback) {
-        String requestBody = Utils.convertObj2String(body);
+        String requestBody = Utils.convertObj2String(gson, body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);
         if (!"GET".equals(method)) {

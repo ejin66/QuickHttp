@@ -1,11 +1,11 @@
 package com.ejin.quickhttp;
 
-import com.alibaba.fastjson.JSONObject;
+import java.nio.charset.Charset;
 
 /**
  * Created by ejin on 2018/3/27.
  */
-public abstract class ModelCallback<T> extends StringCallback {
+public abstract class ModelCallback<T> extends DataCallback {
 
     private Class<T> tClass;
 
@@ -22,17 +22,17 @@ public abstract class ModelCallback<T> extends StringCallback {
     public abstract void onError(int code, String error);
 
     @Override
-    final  public void onSuccess(String s) {
+    final public void onSuccess(byte[] data) {
         if (tClass == null) {
             handlerError(-10000, "parse response error, T class is null");
             return;
         }
 
         try {
-            String data = s;
+            String s = new String(data, Charset.forName("UTF-8"));
             if (getTemplateClass() != null) {
-                Object o = JSONObject.parseObject(s, getTemplateClass());
-                TempData tempData = Utils.parseTemplateByAnnotation(o);
+                Object o = gson().fromJson(s, getTemplateClass());
+                TempData tempData = Utils.parseTemplateByAnnotation(gson(), o);
 
                 if (tempData == null) {
                     handlerError(-10000, "parse template data with annotation failed");
@@ -43,10 +43,9 @@ public abstract class ModelCallback<T> extends StringCallback {
                     handlerError(tempData.getCode(), tempData.getError());
                     return;
                 }
-                data = tempData.getData();
+                s = tempData.getData().toString();
             }
-
-            T t = JSONObject.parseObject(data, tClass);
+            T t = gson().fromJson(s, tClass);
             onSuccess(t);
         } catch (Exception e) {
             handlerError(-10000, "parse response error: " + e.getMessage());

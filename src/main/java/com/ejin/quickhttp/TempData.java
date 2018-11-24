@@ -1,13 +1,16 @@
 package com.ejin.quickhttp;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+
 /**
  * Created by ejin on 2018/3/27.
  */
-public class TempData {
+class TempData {
 
     private int code;
     private String error;
-    private String data;
+    private JsonElement data;
 
     TempData() {}
 
@@ -27,11 +30,11 @@ public class TempData {
         this.error = error;
     }
 
-    public String getData() {
+    public JsonElement getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(JsonElement data) {
         this.data = data;
     }
 }

@@ -1,5 +1,6 @@
 package com.ejin.quickhttp;
 
+import com.google.gson.Gson;
 import okhttp3.Callback;
 
 /**
@@ -10,11 +11,13 @@ public abstract class BaseCallback implements Callback {
     private boolean enableLog = false;
     private Class templateClass;
     private int successCode = 0;
+    private Gson gson;
 
     BaseCallback set(QuickClient client) {
         this.enableLog = client.enableLog;
         this.templateClass = client.templateClass;
         this.successCode = client.successCode;
+        this.gson = client.gson;
         return this;
     }
 
@@ -28,6 +31,10 @@ public abstract class BaseCallback implements Callback {
 
     int getSuccessCode() {
         return successCode;
+    }
+
+    Gson gson() {
+        return gson;
     }
 
 }

@@ -3,16 +3,16 @@
  */
 public class DemoBeanDesc {
 
-    private String desc;
+    private String name;
     private int id;
-    private String title;
+    private int order;
 
-    public String getDesc() {
-        return desc;
+    public String getName() {
+        return name;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
@@ -23,20 +23,20 @@ public class DemoBeanDesc {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getOrder() {
+        return order;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Override
     public String toString() {
         return "DemoBeanDesc{" +
-                "desc='" + desc + '\'' +
+                "name='" + name + '\'' +
                 ", id=" + id +
-                ", title='" + title + '\'' +
+                ", order=" + order +
                 '}';
     }
 }
