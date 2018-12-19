@@ -1,6 +1,7 @@
 package com.ejin.quickhttp;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import okhttp3.*;
 
 import java.io.File;
@@ -27,7 +28,7 @@ public class QuickClient {
     private OkHttpClient client;
     private Sync sync;
     private Map<Object, Call> callMap = new HashMap<Object, Call>();
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
 
     private QuickClient() {
     }
@@ -288,6 +289,11 @@ public class QuickClient {
 
         public Builder enableLog(boolean enable) {
             client.enableLog = enable;
+            return this;
+        }
+
+        public Builder setGson(Gson gson) {
+            client.gson = gson;
             return this;
         }
 

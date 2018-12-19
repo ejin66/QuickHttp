@@ -1,6 +1,5 @@
 package com.ejin.quickhttp;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 /**

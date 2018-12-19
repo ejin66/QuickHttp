@@ -1,7 +1,6 @@
-import com.ejin.quickhttp.ArrayModelCallback;
-import com.ejin.quickhttp.ModelCallback;
-import com.ejin.quickhttp.QuickClient;
-import com.ejin.quickhttp.SimpleCallback;
+import com.ejin.quickhttp.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -11,6 +10,16 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
+//mvn clean deploy -P release
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
+
+        TBean tBean = new TBean(TEnum.FIRST, TEnum.SECOND);
+
+        System.out.println(gson.toJson(tBean));
+
+        String t = "{\"t1\":5,\"t2\":\"second2\"}";
+        System.out.println(gson.fromJson(t, TBean.class));
+
 //        QuickClient client = new QuickClient.Builder()
 //                .enableLog(true)
 //                .build();
@@ -26,50 +35,50 @@ public class Test {
 //                System.err.println(error);
 //            }
 //        };
-        QuickClient client = new QuickClient.Builder().enableLog(true).setTemplate(DemoBean.class).build();
-
-        ArrayModelCallback callback1 = new ArrayModelCallback<DemoBeanDesc>() {
-            @Override
-            public void onSuccess(List<DemoBeanDesc> list) {
-                System.out.println(list);
-            }
-
-            @Override
-            public void onError(int code, String error) {
-                System.err.println(error);
-            }
-        };
-
-        client.get("http://www.wanandroid.com/hotkey/json", callback1);
-
-        ModelCallback callback = new ModelCallback<DemoBean>() {
-
-            @Override
-            public void onSuccess(DemoBean demoBean) {
-                System.out.println(demoBean);
-            }
-
-            @Override
-            public void onError(int code, String error) {
-                System.err.println(error);
-            }
-        };
-
-        SimpleCallback callback2 = new SimpleCallback() {
-            @Override
-            public void onSuccess() {
-                System.out.println("on success");
-            }
-
-            @Override
-            public void onError(int code, String error) {
-                System.err.println(error);
-            }
-        };
+//        QuickClient client = new QuickClient.Builder().enableLog(true).setTemplate(DemoBean.class).build();
+//
+//        ArrayModelCallback callback1 = new ArrayModelCallback<DemoBeanDesc>() {
+//            @Override
+//            public void onSuccess(List<DemoBeanDesc> list) {
+//                System.out.println(list);
+//            }
+//
+//            @Override
+//            public void onError(int code, String error) {
+//                System.err.println(error);
+//            }
+//        };
+//
+//        client.get("http://www.wanandroid.com/hotkey/json", callback1);
+//
+//        ModelCallback callback = new ModelCallback<DemoBean>() {
+//
+//            @Override
+//            public void onSuccess(DemoBean demoBean) {
+//                System.out.println(demoBean);
+//            }
+//
+//            @Override
+//            public void onError(int code, String error) {
+//                System.err.println(error);
+//            }
+//        };
+//
+//        SimpleCallback callback2 = new SimpleCallback() {
+//            @Override
+//            public void onSuccess() {
+//                System.out.println("on success");
+//            }
+//
+//            @Override
+//            public void onError(int code, String error) {
+//                System.err.println(error);
+//            }
+//        };
 
 
 //        QuickClient.getDefault().get("https://www.baidu.com", callback);
-        QuickClient.getDefault().get("http://www.wanandroid.com/hotkey/json", callback2);
+//        QuickClient.getDefault().get("http://www.wanandroid.com/hotkey/json", callback2);
 //        QuickClient.getDefault().post("http://www.wanandroid.com/hotkey/json", callback);
 //        QuickClient.getDefault().put("http://www.wanandroid.com/hotkey/json", callback);
 //        QuickClient.getDefault().delete("http://www.wanandroid.com/hotkey/json", callback);
