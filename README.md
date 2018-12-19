@@ -123,7 +123,7 @@ String response = client.sync().get("http://www.baidu.com");
 <dependency>
     <groupId>com.github.ejin66</groupId>
     <artifactId>QuickHttp</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 or
