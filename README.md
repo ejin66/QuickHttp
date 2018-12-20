@@ -128,5 +128,5 @@ String response = client.sync().get("http://www.baidu.com");
 ```
 or
 ```java
-compile 'com.github.ejin66:QuickHttp:1.0.1'
+compile 'com.github.ejin66:QuickHttp:1.0.6'
 ```
