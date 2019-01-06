@@ -203,8 +203,6 @@ public class QuickClient {
                     inputStream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
-                } finally {
-                    callback.onSuccess();
                 }
             }
         });

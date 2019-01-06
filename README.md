@@ -123,10 +123,10 @@ String response = client.sync().get("http://www.baidu.com");
 <dependency>
     <groupId>com.github.ejin66</groupId>
     <artifactId>QuickHttp</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
 </dependency>
 ```
 or
 ```java
-compile 'com.github.ejin66:QuickHttp:1.0.6'
+compile 'com.github.ejin66:QuickHttp:1.0.7'
 ```
