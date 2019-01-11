@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/QuickHttp.iml" filepath="$PROJECT_DIR$/QuickHttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/QuickHttp.iml" filepath="$PROJECT_DIR$/.idea/QuickHttp.iml" />
     </modules>
   </component>
 </project>

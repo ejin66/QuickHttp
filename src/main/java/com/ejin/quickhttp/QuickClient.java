@@ -27,6 +27,7 @@ public class QuickClient {
     int successCode = 0;
     private OkHttpClient client;
     private Sync sync;
+    private Dns dns;
     private Map<Object, Call> callMap = new HashMap<Object, Call>();
     Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
 
@@ -44,12 +45,15 @@ public class QuickClient {
             }
         };
 
-        client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
                 .readTimeout(connectTimeout, TimeUnit.MILLISECONDS)
                 .writeTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-                .addInterceptor(headerInterceptor)
-                .build();
+                .addInterceptor(headerInterceptor);
+        if (dns != null) {
+            builder.dns(dns);
+        }
+        client = builder.build();
         sync = new Sync(client, gson, enableLog);
         return this;
     }
@@ -58,7 +62,7 @@ public class QuickClient {
         if (defaultClient == null) {
             synchronized (QuickClient.class) {
                 if (defaultClient == null) {
-                    defaultClient = new QuickClient.Builder().enableLog(true).build();
+                    defaultClient = new QuickClient.Builder().enableLog(false).build();
                 }
             }
         }
@@ -323,6 +327,11 @@ public class QuickClient {
 
         public Builder setSuccessCode(int code) {
             client.successCode = code;
+            return this;
+        }
+
+        public Builder setDns(Dns dns) {
+            client.dns = dns;
             return this;
         }
 

@@ -1,7 +1,14 @@
 import com.ejin.quickhttp.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import okhttp3.Call;
+import okhttp3.Dns;
+import okhttp3.Response;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,18 +18,31 @@ public class Test {
 
     public static void main(String[] args) {
 //mvn clean deploy -P release
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
+//        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
+//
+//        TBean tBean = new TBean(TEnum.FIRST, TEnum.SECOND);
+//
+//        System.out.println(gson.toJson(tBean));
+//
+//        String t = "{\"t1\":5,\"t2\":\"second2\"}";
+//        System.out.println(gson.fromJson(t, TBean.class));
 
-        TBean tBean = new TBean(TEnum.FIRST, TEnum.SECOND);
+        QuickClient client = new QuickClient.Builder()
+                .enableLog(true)
+                .build();
 
-        System.out.println(gson.toJson(tBean));
+        //https://elevtest.inovance.com:6004
+        client.get("https://www.baidu.com.com", new StringCallback() {
+            @Override
+            public void onSuccess(String s) {
 
-        String t = "{\"t1\":5,\"t2\":\"second2\"}";
-        System.out.println(gson.fromJson(t, TBean.class));
+            }
 
-//        QuickClient client = new QuickClient.Builder()
-//                .enableLog(true)
-//                .build();
+            @Override
+            public void onError(int code, String error) {
+
+            }
+        });
 
 //        StringCallback callback = new StringCallback() {
 //            @Override
