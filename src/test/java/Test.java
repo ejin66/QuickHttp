@@ -32,10 +32,10 @@ public class Test {
                 .build();
 
         //https://elevtest.inovance.com:6004
-        client.get("https://www.baidu.com.com", new StringCallback() {
+        client.get("https://www.baidu.com", new StringCallback() {
             @Override
             public void onSuccess(String s) {
-
+                System.out.println(getRawResponse().toString());
             }
 
             @Override

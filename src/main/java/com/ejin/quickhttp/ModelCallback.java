@@ -2,6 +2,10 @@ package com.ejin.quickhttp;
 
 import java.nio.charset.Charset;
 
+import static com.ejin.quickhttp.ErrorCode.ERROR_MISSING_MODEL_CLASS;
+import static com.ejin.quickhttp.ErrorCode.ERROR_PARSE_TEMPLATE;
+import static com.ejin.quickhttp.ErrorCode.ERROR_PARSE_RESPONSE;
+
 /**
  * Created by ejin on 2018/3/27.
  */
@@ -24,7 +28,7 @@ public abstract class ModelCallback<T> extends DataCallback {
     @Override
     final public void onSuccess(byte[] data) {
         if (tClass == null) {
-            handlerError(-10000, "parse response error, T class is null");
+            handlerError(ERROR_MISSING_MODEL_CLASS, "parse response error, T class is null");
             return;
         }
 
@@ -35,7 +39,7 @@ public abstract class ModelCallback<T> extends DataCallback {
                 TempData tempData = Utils.parseTemplateByAnnotation(gson(), o);
 
                 if (tempData == null) {
-                    handlerError(-10000, "parse template data with annotation failed");
+                    handlerError(ERROR_PARSE_TEMPLATE, "parse template data with annotation failed");
                     return;
                 }
 
@@ -43,12 +47,18 @@ public abstract class ModelCallback<T> extends DataCallback {
                     handlerError(tempData.getCode(), tempData.getError());
                     return;
                 }
+
+                if (tempData.getData() == null) {
+                    onSuccess((T)null);
+                    return;
+                }
+
                 s = tempData.getData().toString();
             }
             T t = gson().fromJson(s, tClass);
             onSuccess(t);
         } catch (Exception e) {
-            handlerError(-10000, "parse response error: " + e.getMessage());
+            handlerError(ERROR_PARSE_RESPONSE, "parse response error: " + e.getMessage());
         }
     }
 

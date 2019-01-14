@@ -12,16 +12,15 @@ import java.nio.charset.Charset;
  */
 public abstract class DataCallback extends BaseCallback {
 
+    private RawResponse rawResponse;
+
     public abstract void onSuccess(byte[] bytes);
 
     public abstract void onError(int code, String error);
 
     @Override
     final public void onFailure(Call call, IOException e) {
-        if (enableLog()) {
-            Log.e("Response [" + call.request().url() + "] error:" + e.getMessage());
-        }
-        onError(-10000, e.getMessage());
+        handlerError(ErrorCode.ERROR_NETWORK, e.getMessage(), call);
     }
 
     @Override
@@ -33,21 +32,35 @@ public abstract class DataCallback extends BaseCallback {
             return;
         }
 
+        rawResponse = new RawResponse(response.code(), response.headers());
+
         if (!response.isSuccessful()) {
-            onFailure(call, new IOException("network request error: " + response.code()));
+            handlerError(ErrorCode.ERROR_HTTP_CODE, "http code error: " + response.code(), call);
             return;
         }
 
         try {
             byte[] bytes = body.bytes();
+            rawResponse.setBody(bytes);
             if (enableLog()) {
                 String s = new String(bytes, Charset.forName("UTF-8"));
                 Log.d("Response [" + call.request().url() + "]\n" + s);
             }
             onSuccess(bytes);
         } catch (Exception e) {
-            onFailure(call, new IOException("parse response error: " + e.getMessage()));
+            handlerError(ErrorCode.ERROR_PARSE_RESPONSE, "parse response error: " + e.getMessage(), call);
         }
 
+    }
+
+    final public RawResponse getRawResponse() {
+        return rawResponse;
+    }
+
+    private void handlerError(int code, String error, Call call) {
+        if (enableLog()) {
+            Log.e("Response [" + call.request().url() + "] error: " + error);
+        }
+        onError(code, error);
     }
 }

@@ -27,7 +27,7 @@ public abstract class ArrayModelCallback<T> extends DataCallback {
     @Override
     final public void onSuccess(byte[] data) {
         if (tClass == null) {
-            onError(-10000, "parse response error, T class is null");
+            onError(ErrorCode.ERROR_MISSING_MODEL_CLASS, "parse response error, T class is null");
             return;
         }
 
@@ -38,7 +38,7 @@ public abstract class ArrayModelCallback<T> extends DataCallback {
                 TempData tempData = Utils.parseTemplateByAnnotation(gson(), o);
 
                 if (tempData == null) {
-                    onError(-10000, "parse template data with annotation failed");
+                    onError(ErrorCode.ERROR_PARSE_TEMPLATE, "parse template data with annotation failed");
                     return;
                 }
 
@@ -46,12 +46,18 @@ public abstract class ArrayModelCallback<T> extends DataCallback {
                     onError(tempData.getCode(), tempData.getError());
                     return;
                 }
+
+                if (tempData.getData() == null) {
+                    onSuccess((List<T>)null);
+                    return;
+                }
+
                 s = tempData.getData().toString();
             }
             List<T> tList = gson().fromJson(s, new ParameterizedTypeListImpl(tClass));
             onSuccess(tList);
         } catch (Exception e) {
-            onError(-10000, "parse response error: " + e.getMessage());
+            onError(ErrorCode.ERROR_PARSE_RESPONSE, "parse response error: " + e.getMessage());
         }
     }
 

@@ -54,7 +54,7 @@ public class Sync {
         return request(url, "DELETE", headers, body);
     }
 
-    private SyncResult request(String url, String method, List<Header> headers, Object body) {
+    public SyncResult request(String url, String method, List<Header> headers, Object body) {
         String requestBody = Utils.convertObj2String(gson, body);
         MediaType jsonMediaType = MediaType.parse("application/json; charset=utf-8");
         Request.Builder builder = new Request.Builder().url(url);

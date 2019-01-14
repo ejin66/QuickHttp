@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
  * Created by ejin on 2018/3/26.
  */
 public class QuickClient {
-
     private static volatile QuickClient defaultClient;
     private List<Header> headers = new ArrayList<Header>();
     private long connectTimeout = 5000;
@@ -35,25 +34,27 @@ public class QuickClient {
     }
 
     private QuickClient make() {
-        Interceptor headerInterceptor = new Interceptor() {
-            public Response intercept(Chain chain) throws IOException {
-                Request.Builder builder = chain.request().newBuilder();
-                for (Header item : headers) {
-                    builder.addHeader(item.getKey(), item.getValue());
+        if (client == null) {
+            Interceptor headerInterceptor = new Interceptor() {
+                public Response intercept(Chain chain) throws IOException {
+                    Request.Builder builder = chain.request().newBuilder();
+                    for (Header item : headers) {
+                        builder.addHeader(item.getKey(), item.getValue());
+                    }
+                    return chain.proceed(builder.build());
                 }
-                return chain.proceed(builder.build());
-            }
-        };
+            };
 
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-                .writeTimeout(connectTimeout, TimeUnit.MILLISECONDS)
-                .addInterceptor(headerInterceptor);
-        if (dns != null) {
-            builder.dns(dns);
+            OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                    .connectTimeout(connectTimeout, TimeUnit.MILLISECONDS)
+                    .readTimeout(connectTimeout, TimeUnit.MILLISECONDS)
+                    .writeTimeout(connectTimeout, TimeUnit.MILLISECONDS)
+                    .addInterceptor(headerInterceptor);
+            if (dns != null) {
+                builder.dns(dns);
+            }
+            client = builder.build();
         }
-        client = builder.build();
         sync = new Sync(client, gson, enableLog);
         return this;
     }
@@ -143,6 +144,10 @@ public class QuickClient {
 
     public void delete(Object tag, String url, List<Header> headers, Object body, final BaseCallback callback) {
         request(tag, url, "DELETE", headers, body, callback);
+    }
+
+    public void request(Object tag, Request request, String content, BaseCallback callback) {
+        enqueue(request, tag, content, callback.set(this));
     }
 
     private void request(Object tag, String url, String method, List<Header> headers, Object body, final BaseCallback callback) {
@@ -240,6 +245,14 @@ public class QuickClient {
     }
 
     public void cancel(Object tag) {
+        if (tag == null) {
+            for (Map.Entry<Object, Call> item: callMap.entrySet()) {
+                item.getValue().cancel();
+            }
+            callMap.clear();
+            return;
+        }
+
         for (Map.Entry<Object, Call> item : callMap.entrySet()) {
             if (item.getKey() == tag) {
                 item.getValue().cancel();
@@ -259,6 +272,9 @@ public class QuickClient {
     private void enqueue(Request request, Object tag, String body, final Callback callback) {
         if (enableLog) {
             String log = "Request [" + request.method() + "][" + request.url() + "]";
+            if (request.headers().size() > 0) {
+                log += request.headers().toString();
+            }
             if (body != null) {
                 log += "\n" + body;
             }
@@ -287,6 +303,11 @@ public class QuickClient {
 
         public Builder() {
             client = new QuickClient();
+        }
+
+        public Builder setOkHttpClient(OkHttpClient httpClient) {
+            client.client = httpClient;
+            return this;
         }
 
         public Builder enableLog(boolean enable) {
@@ -338,7 +359,5 @@ public class QuickClient {
         public QuickClient build() {
             return client.make();
         }
-
     }
-
 }
