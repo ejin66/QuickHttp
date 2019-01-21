@@ -31,7 +31,7 @@ public class Test {
                 .enableLog(true)
                 .build();
 
-        //https://elevtest.inovance.com:6004
+  
         client.get("https://www.baidu.com", new StringCallback() {
             @Override
             public void onSuccess(String s) {
