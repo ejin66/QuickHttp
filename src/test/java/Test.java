@@ -17,7 +17,6 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-//mvn clean deploy -P release
 //        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
 //
 //        TBean tBean = new TBean(TEnum.FIRST, TEnum.SECOND);

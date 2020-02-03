@@ -43,7 +43,7 @@ public abstract class ArrayModelCallback<T> extends DataCallback {
                 }
 
                 if (tempData.getCode() != getSuccessCode()) {
-                    onError(tempData.getCode(), tempData.getError());
+                    onError(tempData.getCode(), "" + tempData.getError());
                     return;
                 }
 

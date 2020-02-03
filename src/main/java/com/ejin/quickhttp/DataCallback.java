@@ -20,7 +20,7 @@ public abstract class DataCallback extends BaseCallback {
 
     @Override
     final public void onFailure(Call call, IOException e) {
-        handlerError(ErrorCode.ERROR_NETWORK, e.getMessage(), call);
+        handlerError(ErrorCode.ERROR_NETWORK, "" + e.getMessage(), call);
     }
 
     @Override

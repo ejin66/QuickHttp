@@ -44,7 +44,7 @@ public abstract class ModelCallback<T> extends DataCallback {
                 }
 
                 if (tempData.getCode() != getSuccessCode()) {
-                    handlerError(tempData.getCode(), tempData.getError());
+                    handlerError(tempData.getCode(), "" + tempData.getError());
                     return;
                 }
 
